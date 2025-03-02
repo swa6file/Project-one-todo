@@ -1,0 +1,9 @@
+{%extends 'base.html'%}
+
+{% block content %}
+<h1>Ура вы успешно зарегистрированы!!!!!! ГИГАЧАДИК</h1>
+<form method="post" action="{%url 'users:login'%}">
+    {%csrf_token%}
+    <p>Вы успешно зарегистрировались на сайте! Для входа в систему необходимо авторизоваться. <button>Тык</button></p>
+</form>
+{%endblock%}

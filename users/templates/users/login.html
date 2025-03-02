@@ -1,0 +1,21 @@
+{%extends 'base.html'%}
+{%block content%}
+<h3>О май гад страница авторизации </h3>
+
+<form method="post">
+  {% csrf_token %}
+      <div class="mb-3">
+        <label for="form.username.id_for_label" class="form-label">{{form.username.label}}</label>
+        <p>{{form.username}} </p>
+        <div class="form-error">{{form.username.errors}}</div>
+      </div>
+        <div class="mb-3">
+        <label for="form.password.id_for_label" class="form-label">{{form.password.label}}</label>
+        <p>{{form.password}} </p>
+        <div class="form-error">{{form.password.errors}}</div>
+<!--      <input type="text" class="form-control" id="taskTitle" placeholder="Введите заголовок задачи">-->
+      </div>
+    <p><a href="{% url 'users:password_reset' %}">Восстановить пароль</a></p>
+  <p><button type="submit">Войти</button></p>
+</form>
+{%endblock%}
