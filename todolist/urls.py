@@ -15,13 +15,29 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.template.context_processors import request
+from django.urls import path, include, re_path
+from rest_framework import routers
+from rest_framework.routers import SimpleRouter
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
 from tasks import views
+from tasks.views import TaskAPIList, TaskAPIUpdate, TaskAPIDestroy
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('tasks.urls')),
     path('users/',include('users.urls',namespace='users')),
+    path('api/v1/drf-auth/', include('rest_framework.urls')),
+    path('api/v1/task/', TaskAPIList.as_view()),
+    path('api/v1/task/<int:pk>/', TaskAPIUpdate.as_view()),
+    path('api/v1/taskdelete/<int:pk>/', TaskAPIDestroy.as_view()),
+    path('api/v1/auth/', include('djoser.urls')),
+    re_path(r'^auth/', include('djoser.urls.authtoken')),
+
+    path('api/v1/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/v1/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
 ]
 
 admin.site.site_header = "Панель администрирования"
