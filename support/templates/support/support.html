@@ -1,0 +1,24 @@
+{%extends 'base.html'%}
+{%block content%}
+<h1>Страница поддержки</h1>
+<form method="post" action="">
+    {%csrf_token%}
+    <div class="mb-3">
+        <label for="form.title.id_for_label" class="form-label">{{form.title.label}}</label>
+        <p>{{form.title}} </p>
+        <div class="form-error">{{form.title.errors}}</div>
+    </div>
+    <div class="mb-3">
+        <label for="form.description.id_for_label" class="form-label">{{form.description.label}}</label>
+        <p>{{form.description}} </p>
+        <div class="form-error">{{form.description.errors}}</div>
+    </div>
+    <button onclick="myFunction()" type="submit">Отправить</button>
+    <script>
+function myFunction() {
+  alert("Ваша заявка была отправлена");
+}
+</script>
+    </form>
+
+{%endblock%}

@@ -28,6 +28,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('tasks.urls')),
     path('users/',include('users.urls',namespace='users')),
+
+    #DRF
     path('api/v1/drf-auth/', include('rest_framework.urls')),
     path('api/v1/task/', TaskAPIList.as_view()),
     path('api/v1/task/<int:pk>/', TaskAPIUpdate.as_view()),
@@ -37,7 +39,9 @@ urlpatterns = [
 
     path('api/v1/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/v1/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    #END
 
+    path('support/', include('support.urls'))
 ]
 
 admin.site.site_header = "Панель администрирования"

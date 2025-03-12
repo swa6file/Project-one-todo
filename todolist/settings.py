@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'tasks.apps.TasksConfig',
     'users.apps.UsersConfig',
+    'support.apps.SupportConfig',
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',

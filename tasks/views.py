@@ -5,12 +5,13 @@ from django.contrib.auth.models import User
 from django.forms import model_to_dict
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+#DRF
 from django.template.loader import render_to_string
 from rest_framework import generics
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.permissions import  IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import viewsets
@@ -18,6 +19,7 @@ from tasks.forms import AddPostTask
 from .models import Task
 from .permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly
 from .serializers import TaskSerializer
+#end drf
 
 # Часть 1 Туду листа самого сайта не трогать
 def index(request): #HTTP Request
@@ -60,14 +62,14 @@ def cancel_update(request,name):
 #2 Часть DRF
 
 class WomenAPIListPagination(PageNumberPagination):
-    page_size = 3
+    page_size = 10
     page_size_query_param = 'page_size'
     max_page_size = 10000
 
 class TaskAPIList(generics.ListCreateAPIView):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated,]
     pagination_class = WomenAPIListPagination
 
 class TaskAPIUpdate(generics.RetrieveUpdateAPIView):
@@ -79,7 +81,7 @@ class TaskAPIUpdate(generics.RetrieveUpdateAPIView):
 class TaskAPIDestroy(generics.RetrieveDestroyAPIView):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
-    permission_classes = [IsAdminOrReadOnly,]
+    permission_classes = [IsAuthenticated,]
 
 # class TaskAPIList(generics.ListCreateAPIView):
 #     queryset = Task.objects.all()
